@@ -4,12 +4,14 @@
     <title>Trivia</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <!--  CSS Normalize Para Resetear y Prevenir Bugs -->
     <link rel="stylesheet" href="<%= asset_path('normalize.css') %>">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <%= render 'shared/navbar' %>
     <%= yield %>
   </body>
 </html>
