@@ -24,7 +24,6 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    raise
     @question = Question.new(question_params)
     respond_to do |format|
       if @question.save
@@ -54,10 +53,15 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    @question.destroy
-    respond_to do |format|
-      format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
-      format.json { head :no_content }
+    answer_question = @question.answers.all
+    if answer_question.count == 0
+      @question.destroy
+      respond_to do |format|
+        format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to(questions_url, alert: 'Question with answers present')
     end
   end
 

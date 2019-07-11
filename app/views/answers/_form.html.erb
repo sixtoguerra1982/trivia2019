@@ -4,9 +4,7 @@
     <%= form.label :answer, "Respuesta" %>
     <%= form.text_field :answer %>
   </div>
-
-  <%= form.hidden_field :question_id, value: 1 %>
-
+  <%= form.select :question_id, @questions.pluck(:description, :id) %>
   <div class="actions">
     <%= form.submit %>
   </div>
