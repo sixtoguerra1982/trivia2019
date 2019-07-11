@@ -1,0 +1,11 @@
+<%= render 'shared/navbaranswers' %>
+<p id="notice"><%= notice %></p>
+
+<h1>Answers</h1>
+<% @answers.each do |answer|   %>
+  <ul>
+    <li><%=answer.answer%></li>
+    <li><%=answer.question.description %></li>
+    <li><%= link_to 'Edit', edit_answer_path(answer) %></li>
+  </ul>
+<% end %>
