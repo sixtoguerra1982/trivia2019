@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: [:edit, :update]
+  before_action :set_answer, only: [:edit, :update, :destroy]
   before_action :set_questions, only: [:new, :edit]
   def index
     @answers = Answer.all
@@ -32,6 +32,15 @@ class AnswersController < ApplicationController
       end
     end
   end
+
+  def destroy
+    @answer.destroy
+    respond_to do |format|
+      format.html { redirect_to answers_url, notice: 'Answer was successfully destroyed.' }
+      format.json { head :no_content }
+    end
+  end
+
 
   private
 
