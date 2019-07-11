@@ -10,6 +10,12 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.json
   def show
+    @limit_answers = 5
+    @answers = Answer.where(question_id: @question)
+
+    @answer = Answer.new
+    @answer.question_id = @question.id
+
   end
 
   # GET /questions/new
