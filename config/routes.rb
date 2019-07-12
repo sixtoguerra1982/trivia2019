@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  resources :answers
-  resources :questions
+  resources :questions do
+    resources :answers
+  end
+  get 'answers/index'
+
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }

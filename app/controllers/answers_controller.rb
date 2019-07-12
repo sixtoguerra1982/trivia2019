@@ -1,11 +1,13 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
-  before_action :set_questions, only: [:new, :edit]
+  before_action :set_questions, only: [:new, :edit, :index]
   def index
     @answers = Answer.all
+    @question = @questions.first
   end
   def new
     @answer = Answer.new
+    @question = @questions.first
   end
   def create
     @limit_answers = 5
@@ -14,24 +16,25 @@ class AnswersController < ApplicationController
       @answers = Answer.where(question_id: @answer.question_id)
       if @answers.count < @limit_answers
         if @answer.save
-          format.html { redirect_to answers_path , notice: 'Answer was successfully created.' }
+          format.html { redirect_to answers_index_path , notice: 'Answer was successfully created.' }
         else
           format.html { render :new }
           format.json { render json: @answer.errors, status: :unprocessable_entity }
         end
       else
-        format.html { redirect_to answers_path , alert: 'The maximum number of responses has been exceeded' }
+        format.html { redirect_to answers_index_path , alert: 'The maximum number of responses has been exceeded' }
       end
     end
   end
 
   def edit
+    @question = Question.find(params[:question_id])
   end
 
   def update
     respond_to do |format|
       if @answer.update(answer_params)
-        format.html { redirect_to answers_path, notice: 'Answer was successfully updated.' }
+        format.html { redirect_to answers_index_path, notice: 'Answer was successfully updated.' }
       else
         format.html { render :edit }
         format.json { render json: @answer.errors, status: :unprocessable_entity }
@@ -42,7 +45,7 @@ class AnswersController < ApplicationController
   def destroy
     @answer.destroy
     respond_to do |format|
-      format.html { redirect_to answers_url, notice: 'Answer was successfully destroyed.' }
+      format.html { redirect_to answers_index_url, notice: 'Answer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
