@@ -1,13 +1,7 @@
-<%= render 'shared/navbaranswers' %>
-<p id="notice"><%= notice %></p>
-
-<h1>Answers</h1>
-<% @answers.each do |answer|   %>
+<p><%=@question.description %></p>
+<% @answers.each do |answer| %>
   <ul>
-    <li><%=answer.answer%></li>
-    <li><%=answer.question.description %></li>
-    <li><%= link_to 'Edit', edit_question_answer_path(answer.question_id, answer.id) %></li>
-    <li><%= link_to 'Destroy', question_answer_path(answer.question_id, answer.id), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    <li><%= answer.answer %></li>
   </ul>
 <% end %>
-<%= link_to 'New Respuesta', new_question_answer_path(@question,@answer) %>
+<%= link_to "Back", questions_path  %>

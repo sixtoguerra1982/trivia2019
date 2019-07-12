@@ -5,7 +5,12 @@
   </div>
   <div class="field">
     <%= form.label :question_id, "Pregunta" %>
-    <%= form.select :question_id, @questions.pluck(:description, :id) %>
+    <% if @questions.present? %>
+      <%= form.select :question_id, @questions.pluck(:description, :id) %>
+    <% else %>
+      <%= form.hidden_field :question_id, value: @question.id %>
+      <p><%= @question.description %></p>
+    <% end %>
   </div>
   <div class="actions">
     <%= form.submit %>
