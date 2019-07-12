@@ -2,12 +2,13 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
   before_action :set_questions, only: [:new, :index_answers]
   def index_answers
-    @answers = Answer.all
+    @answers = Answer.order(:question_id)
     @question = @questions.first
   end
 
   def index
     @answers = Answer.where(question_id: params[:question_id])
+    @answer = Answer.new
     @question = Question.find(params[:question_id])
   end
 

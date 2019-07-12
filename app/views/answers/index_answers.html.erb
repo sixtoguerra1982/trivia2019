@@ -5,9 +5,11 @@
 <% @answers.each do |answer|   %>
   <ul>
     <li><%=answer.answer%></li>
-    <li><%=answer.question.description %></li>
+    <li><%= link_to answer.question.description, question_answers_path(answer.question_id) %>
     <li><%= link_to 'Edit', edit_question_answer_path(answer.question_id, answer.id) %></li>
     <li><%= link_to 'Destroy', question_answer_path(answer.question_id, answer.id), method: :delete, data: { confirm: 'Are you sure?' } %></li>
   </ul>
 <% end %>
-<%= link_to 'New Respuesta', new_question_answer_path(@question,@answer) %>
+<% if @question.present? %>
+  <%= link_to 'New Respuesta', new_question_answer_path(@question,@answer) %>
+<% end %>
