@@ -9,6 +9,7 @@ class AnswersController < ApplicationController
   def index
     @answers = Answer.where(question_id: params[:question_id])
     @answer = Answer.new
+    byebug
     @question = Question.find(params[:question_id])
   end
 
@@ -16,14 +17,17 @@ class AnswersController < ApplicationController
     @answer = Answer.new
     @question = @questions.first
   end
+
   def create
+    byebug
     @limit_answers = 5
     @answer = Answer.new(answer_params)
     respond_to do |format|
       @answers = Answer.where(question_id: @answer.question_id)
       if @answers.count < @limit_answers
         if @answer.save
-          format.html { redirect_to answers_index_answers_path , notice: 'Answer was successfully created.' }
+          byebug
+          format.html { redirect_to question_answers_path(@answer.question_id) , notice: 'Answer was successfully created.' }
         else
           format.html { render :new }
           format.json { render json: @answer.errors, status: :unprocessable_entity }
@@ -39,6 +43,7 @@ class AnswersController < ApplicationController
   end
 
   def update
+    byebug
     respond_to do |format|
       if @answer.update(answer_params)
         format.html { redirect_to answers_index_answers_path, notice: 'Answer was successfully updated.' }
