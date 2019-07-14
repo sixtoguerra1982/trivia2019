@@ -3,14 +3,20 @@
 <label for="Answers List">Respuestas</label>
 <% @answers.each do |answer| %>
   <ul>
-    <li><%= answer.answer %></li>
+    <li>
+      <%= answer.answer %>
+      <ol>
+        <li><%= link_to "X", question_answer_path(answer.question_id, answer.id) , method: :delete %></li>
+      </ol>
+    </li>
   </ul>
 <% end %>
+
 
 <%= form_with(model: [@question, @answer], local: true) do |form| %>
 
   <%= form.hidden_field :question_id, value: @question.id %>
-  <p><%= @question.id %></p>
+
   <div class="field">
     <%= form.label :answer, "Respuesta" %>
     <%= form.text_field :answer %>

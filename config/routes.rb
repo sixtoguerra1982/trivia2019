@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   resources :questions do
     resources :answers
   end
-  get 'answers/index_answers'
+
+  get 'answers/index_answers', as: ''
+  get 'index_answers', to: 'answers#index_answers', as: 'answers_index'
 
   devise_for :users, controllers: {
     registrations: 'users/registrations'
