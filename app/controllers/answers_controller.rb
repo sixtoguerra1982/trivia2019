@@ -23,6 +23,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       @answers = Answer.where(question_id: @answer.question_id)
       if @answers.count < @limit_answers
+        @answer.tipo = false
         if @answer.save
           format.html { redirect_to question_answers_path(@answer.question_id) , notice: 'Answer was successfully created.' }
           format.json { render json:@answer}

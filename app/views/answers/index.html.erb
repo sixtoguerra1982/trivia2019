@@ -6,16 +6,28 @@
   <h1><%= @question.description %> ?</h1>
   <% @answers.each do |answer| %>
     <ul class="list-group">
-      <p><%= answer.tipo.to_s %></p>
-      <li class="list-group-item <%= answer.tipo.to_s %>">
+      <li class="list-group-item <%= answer.tipo.to_s=="true" ? 'list-group-item-success' : 'list-group-item-warning'%>">
         <%= answer.answer %>
         <ol class="list-group">
           <li class="list-group-item"><%= link_to "X", question_answer_path(answer.question_id, answer.id) , method: :delete %></li>
         </ol>
         <div class="">
           <form>
-            <input type="radio" name="answer<%= answer.id %>" id="red" checked="<%= answer.tipo %>">True<br>
-            <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt2" checked="<%= answer.tipo %>">False
+            <% if answer.tipo.to_s == "true" %>
+               <div class="input-group">
+                 <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt1" checked="<%= answer.tipo.to_s %>" onclick="OnChangeState (this.name)">
+                 <label for="answer<%= answer.id %>">True</label>
+                 <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt2" onclick="OnChangeState (this.name)">
+                 <label for="answer<%= answer.id %>">False</label>
+               </div>
+            <% else %>
+              <div class="input-group">
+                <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt1" onclick="OnChangeState (this.name)">
+                <label for="answer<%= answer.id %>">True</label>
+                <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt2" checked="true" onclick="OnChangeState (this.name)">
+                <label for="answer<%= answer.id %>">False</label><br>
+              </div>
+            <% end %>
           </form>
         </div>
       </li>
@@ -39,3 +51,15 @@
 
 
 <%= link_to "Back", questions_path  %>
+
+<script type="text/javascript">
+  function OnChangeState (clicked_id) {
+    alert(clicked_id);
+    var radioButTrat = document.getElementsByName(clicked_id);
+    for (var i=0; i<radioButTrat.length; i++) {
+      if (radioButTrat[i].checked == true) {
+        alert(radioButTrat[i].id);
+       }
+    }
+   }
+</script>
