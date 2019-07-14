@@ -4,35 +4,40 @@
 <% if @answers.count > 0 %>
   <label for="Answers List">Respuestas</label>
   <h1><%= @question.description %> ?</h1>
-  <% @answers.each do |answer| %>
-    <ul class="list-group">
-      <li class="list-group-item <%= answer.tipo.to_s=="true" ? 'list-group-item-success' : 'list-group-item-warning'%>">
-        <%= answer.answer %>
-        <ol class="list-group">
-          <li class="list-group-item"><%= link_to "X", question_answer_path(answer.question_id, answer.id) , method: :delete %></li>
-        </ol>
-        <div class="">
-          <form>
-            <% if answer.tipo.to_s == "true" %>
-               <div class="input-group">
-                 <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt1" checked="<%= answer.tipo.to_s %>" onclick="OnChangeState (this.name)">
-                 <label for="answer<%= answer.id %>">True</label>
-                 <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt2" onclick="OnChangeState (this.name)">
-                 <label for="answer<%= answer.id %>">False</label>
+
+  <form name="FormOpt">
+    <% @answers.each do |answer| %>
+      <ul class="list-group">
+        <li class="list-group-item <%= answer.tipo.to_s=="true" ? 'list-group-item-success' : 'list-group-item-warning'%>" id ="form<%= answer.id %>">
+          <%= answer.answer %>
+          <ol class="list-group">
+            <li class="list-group-item"><%= link_to "X", question_answer_path(answer.question_id, answer.id) , method: :delete %></li>
+          </ol>
+          <% if answer.tipo.to_s == "true" %>
+             <div class="input-group">
+               <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" checked="<%= answer.tipo.to_s %>" onclick="OnChangeState ('form<%= answer.id %>')" class="form-radio">
+               <label for="answer<%= answer.id %>opt1">Respuesta Correcta</label>
+
+               <div class="d-none">
+                 <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt2">
                </div>
-            <% else %>
-              <div class="input-group">
-                <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt1" onclick="OnChangeState (this.name)">
-                <label for="answer<%= answer.id %>">True</label>
-                <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt2" checked="true" onclick="OnChangeState (this.name)">
-                <label for="answer<%= answer.id %>">False</label><br>
+
+             </div>
+          <% else %>
+            <div class="input-group">
+              <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState ('form<%= answer.id %>')" class="form-radio">
+              <label for="answer<%= answer.id %>opt1">Respuesta Equivocada</label>
+
+              <div class="d-none">
+                <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt2" checked="true">
               </div>
-            <% end %>
-          </form>
-        </div>
-      </li>
-    </ul>
-  <% end %>
+
+            </div>
+          <% end %>
+        </li>
+      </ul>
+    <% end %>
+  </form>
 <% end %>
 
 <%= form_with(model: [@question, @answer], local: true) do |form| %>
@@ -54,12 +59,33 @@
 
 <script type="text/javascript">
   function OnChangeState (clicked_id) {
-    alert(clicked_id);
-    var radioButTrat = document.getElementsByName(clicked_id);
-    for (var i=0; i<radioButTrat.length; i++) {
-      if (radioButTrat[i].checked == true) {
-        alert(radioButTrat[i].id);
-       }
-    }
-   }
+
+        var form_clicks = document.querySelectorAll(".list-group-item-success")
+
+        // marcar los elementos success como warning
+        for (var i = 0; i < form_clicks.length; i++) {
+            if (form_clicks[i].classList.contains("list-group-item-success")){
+              form_clicks[i].classList.remove("list-group-item-success");
+              form_clicks[i].classList.add("list-group-item-warning");
+            }
+            var label = form_clicks[i].querySelectorAll("label");
+            label[0].innerText='Respuesta Equivocada';
+            console.log(label);
+        }
+
+        // marcar los elementos clicked como success
+        var i
+				for (i=0;i<document.FormOpt.AnswerOpt.length;i++){
+					if (document.FormOpt.AnswerOpt[i].checked){
+            var form_click = document.getElementById(clicked_id);
+            if (form_click.classList.contains("list-group-item-warning")){
+                form_click.classList.remove("list-group-item-warning");
+                form_click.classList.add("list-group-item-success");
+              }
+            var label = form_click.querySelectorAll("label");
+            label[0].innerText='Respuesta Correcta';
+            break;
+				    }
+        }
+ }
 </script>
