@@ -52,6 +52,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+
     @answer.destroy
     respond_to do |format|
       format.html { redirect_to question_answers_path(@answer.question_id), notice: 'Answer was successfully destroyed.' }
@@ -64,10 +65,9 @@ class AnswersController < ApplicationController
       params.require(:answer).permit(:answer, :question_id)
     end
     def set_answer
-
-        @answer = Answer.find(params[:id])
-
+      @answer = Answer.find(params[:id])
     end
+
     def set_questions
       @questions = Question.all
     end

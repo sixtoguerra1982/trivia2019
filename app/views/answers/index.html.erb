@@ -1,17 +1,27 @@
+<%= link_to 'New Question?', new_question_path %>
 <%= render 'questions/form' %>
 
-<label for="Answers List">Respuestas</label>
-<% @answers.each do |answer| %>
-  <ul>
-    <li>
-      <%= answer.answer %>
-      <ol>
-        <li><%= link_to "X", question_answer_path(answer.question_id, answer.id) , method: :delete %></li>
-      </ol>
-    </li>
-  </ul>
+<% if @answers.count > 0 %>
+  <label for="Answers List">Respuestas</label>
+  <h1><%= @question.description %> ?</h1>
+  <% @answers.each do |answer| %>
+    <ul class="list-group">
+      <p><%= answer.tipo.to_s %></p>
+      <li class="list-group-item <%= answer.tipo.to_s %>">
+        <%= answer.answer %>
+        <ol class="list-group">
+          <li class="list-group-item"><%= link_to "X", question_answer_path(answer.question_id, answer.id) , method: :delete %></li>
+        </ol>
+        <div class="">
+          <form>
+            <input type="radio" name="answer<%= answer.id %>" id="red" checked="<%= answer.tipo %>">True<br>
+            <input type="radio" name="answer<%= answer.id %>" id="answer<%= answer.id %>opt2" checked="<%= answer.tipo %>">False
+          </form>
+        </div>
+      </li>
+    </ul>
+  <% end %>
 <% end %>
-
 
 <%= form_with(model: [@question, @answer], local: true) do |form| %>
 

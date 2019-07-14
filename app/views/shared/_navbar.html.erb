@@ -4,6 +4,8 @@
     <li><%= current_user.email %></li>
     <li><%= link_to 'Salir', destroy_user_session_path , method: :delete %></li>
     <li><%= link_to 'Perfil (Edit)', edit_user_registration_path(current_user) %></li>
+    <li><%= link_to "Index Questions", questions_path  %></li>
+    <li><%= link_to 'Index Answers', answers_index_path %></li>
   <% else %>
     <li><%= link_to 'Ingreso (Log In)', new_user_session_path %></li>
     <li><%= link_to 'Registro (Sign Out)', new_user_registration_path %></li>
