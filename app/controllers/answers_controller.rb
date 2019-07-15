@@ -61,6 +61,19 @@ class AnswersController < ApplicationController
     end
   end
 
+  def answer_update
+
+    @answers = Answer.where(tipo: params[:tipo], question_id: params[:question_id])
+    @answers.each do |answer|
+      answer.tipo = false
+      answer.save
+    end
+
+    @answer = Answer.find(params[:answer].to_i)
+    @answer.tipo = params[:tipo]
+    @answer.save
+  end
+
   private
     def answer_params
       params.require(:answer).permit(:answer, :question_id)
