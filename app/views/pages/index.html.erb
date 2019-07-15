@@ -6,12 +6,23 @@
           <div class="card">
             <div class="card-header">
                <label for="Questions List Play">Preguntas</label>
+               <div class="score">
+                 <label id="indexanswer">0</label>
+                 <label>/</label>
+                 <label><%= @questions.count %></label>
+               </div>
              </div>
-              <% @questions.each do |question| %>
-                <div class="container-fluid mt-1 mb-1">
+             <div class="container-fluid mt-1 mb-1">
+               <div class="card-body">
+                 <div class="mt-2 mb-1 text-center">
+                   <button type="button" class="btn btn-primary" id="star">Comenzar -></button>
+                 </div>
+               </div>
+              <% @questions.each_with_index do |question,i| %>
+                <div class="answerbody" id="answerbody<%=i%>">
                   <h5 class="card-title"><%= question.description %></h5>
                   <div class="car-body">
-                    <select class="select-css" id="select<%=question.id%>" >
+                    <select class="select-css" id="select<%=i%>" >
                       <option value="0">---</option>
                       <% answersOfQuestion(question).each do |answer|%>
                         <li><%= answer.answer %></li>
@@ -19,11 +30,12 @@
                       <% end %>
                     </select>
                     <div class="mt-2 mb-1">
-                      <button type="button" class="btn btn-primary">Respuesta Definita</button>
+                      <button type="button" class="btn btn-primary finalanswer">Respuesta Definita</button>
                     </div>
                   </div>
                 </div>
               <% end %>
+            </div>
           </div>
         </div>
       <% end %>
@@ -32,6 +44,7 @@
 
 <script type="text/javascript">
 
+  //  CERRAR ALERT
   $(document).ready(function () {
 
     window.setTimeout(function() {
@@ -41,4 +54,57 @@
     }, 2500);
 
   });
+
+  // startColorstr
+  window.onload = function (){
+    document.getElementById('star').addEventListener('click',next_question,false);
+    var ElsQuestion = document.querySelectorAll('.finalanswer');
+    if (ElsQuestion) {
+      for (var i=0; i < ElsQuestion.length; i++){
+        ElsQuestion[i].addEventListener('click',next_question,false);
+      }
+    }
+  }
+
+  var cont = 0
+  var positivas = 0
+  var negativas = 0
+  var CantQuestion = document.querySelectorAll('.finalanswer').length;
+  function next_question(){
+    var Sw = 0;
+    if (cont == 0) {
+      $('#star').css("display","none");
+      Sw = 1;
+    }
+    else {
+      var SelectElem  = document.getElementById('select' + cont);
+      var indice = SelectElem.selectedIndex;
+      var SelectValue = SelectElem.options[indice].value;
+      // value valor del elemento seleccionado
+      // text valor del texto
+      if (parseInt(SelectValue) > 0){
+        Sw = 1;
+      }else {
+        alert('Respuesta no Seleccionada')
+      };
+    }
+    if (Sw==1){
+      $('#answerbody' + cont).css("display","none");
+      cont += 1;
+      $("#indexanswer").html(cont);
+      $('#answerbody' + cont).css('display', 'block');
+
+      // sumar las respuestas correctas e Incorrectas
+      
+
+
+
+      if (cont == CantQuestion){
+        alert("LAST");
+      }
+    }
+  }
+
+
+
 </script>
