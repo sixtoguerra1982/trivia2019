@@ -13,3 +13,4 @@ Rails.application.config.assets.paths << Rails.root.join('vendor')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w( normalize.css )
+Rails.application.config.assets.precompile += %w( css-select.css )

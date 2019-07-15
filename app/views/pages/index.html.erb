@@ -1,2 +1,41 @@
-<h1>Trivia</h1>
-<%= render 'shared/navbarquestions' %>
+<div class="container">
+  <div class="mt-10">
+    <h1>Trivia</h1>
+      <% if @questions.count > 0 %>
+        <div class="panelplay">
+          <div class="card">
+            <div class="card-header">
+               <label for="Questions List Play">Preguntas</label>
+             </div>
+              <% @questions.each do |question| %>
+                  <div class="card-body">
+                    <h5 class="card-title"><%= question.description %></h5>
+                    <div class="car-body">
+                      <select class="select-css" id="select<%=question.id%>" >
+                        <option value="0">---</option>
+                        <% answersOfQuestion(question).each do |answer|%>
+                          <li><%= answer.answer %></li>
+                          <option value="<%= answer.id %>"><%= answer.answer %></option>
+                        <% end %>
+                      </select>
+                    </div>
+                  </div>
+              <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  $(document).ready(function () {
+
+    window.setTimeout(function() {
+        $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+            $(this).remove();
+        });
+    }, 2500);
+
+  });
+</script>
