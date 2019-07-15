@@ -8,18 +8,21 @@
                <label for="Questions List Play">Preguntas</label>
              </div>
               <% @questions.each do |question| %>
-                  <div class="card-body">
-                    <h5 class="card-title"><%= question.description %></h5>
-                    <div class="car-body">
-                      <select class="select-css" id="select<%=question.id%>" >
-                        <option value="0">---</option>
-                        <% answersOfQuestion(question).each do |answer|%>
-                          <li><%= answer.answer %></li>
-                          <option value="<%= answer.id %>"><%= answer.answer %></option>
-                        <% end %>
-                      </select>
+                <div class="container-fluid mt-1 mb-1">
+                  <h5 class="card-title"><%= question.description %></h5>
+                  <div class="car-body">
+                    <select class="select-css" id="select<%=question.id%>" >
+                      <option value="0">---</option>
+                      <% answersOfQuestion(question).each do |answer|%>
+                        <li><%= answer.answer %></li>
+                        <option value="<%= answer.id %>"><%= answer.answer %></option>
+                      <% end %>
+                    </select>
+                    <div class="mt-2 mb-1">
+                      <button type="button" class="btn btn-primary">Respuesta Definita</button>
                     </div>
                   </div>
+                </div>
               <% end %>
           </div>
         </div>
