@@ -46,4 +46,23 @@ body{
 
 .answerbody{
   display: none;
+  padding: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: #ffc107;
+  border: 1px solid white;
+  border-radius: 10px;
+}
+
+.puntajefinal{
+  
+}
+
+
+.correcta{
+  background-color: green;
+}
+
+.incorrecta{
+  background-color: red;
 }

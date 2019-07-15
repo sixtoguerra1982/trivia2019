@@ -1,0 +1,12 @@
+var x = (100 / <%= @answerscant %>);
+if ('<%=@answerbol%>'=='true') {
+  $('#answerbody<%=@panel%>').addClass('correcta');
+  var puntajeporcentaje = parseInt($('#puntajeporcentaje').html());
+  puntajeporcentaje = puntajeporcentaje + x;
+  $("#puntajeporcentaje").html(puntajeporcentaje);
+}else {
+  $('#answerbody<%=@panel%>').addClass('incorrecta');
+  var puntajeporcentaje = parseInt($('#puntajeporcentajeerror').html());
+  puntajeporcentaje = puntajeporcentaje + x;
+  $("#puntajeporcentajeerror").html(puntajeporcentaje);
+}

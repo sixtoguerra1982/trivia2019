@@ -1,19 +1,32 @@
 <div class="container">
   <div class="mt-10">
     <h1>Trivia</h1>
-      <% if @questions.count > 0 %>
+      <% if @answerscant > 0 %>
         <div class="panelplay">
           <div class="card">
             <div class="card-header">
-               <label for="Questions List Play">Preguntas</label>
+               <label for="Questions List Play">Respuestas</label>
                <div class="score">
                  <label id="indexanswer">0</label>
                  <label>/</label>
-                 <label><%= @questions.count %></label>
+                 <label><%= @answerscant %></label>
+               </div>
+
+               <div class="puntajefinal">
+                 <label>Correctas</label>
+                 <div class="Aciertos">
+                   <label id="puntajeporcentaje">0</label>
+                   <label>%</label>
+                 </div>
+                 <label>Erróneo</label>
+                 <div class="Aciertos">
+                   <label id="puntajeporcentajeerror">0</label>
+                   <label>%</label>
+                 </div>
                </div>
              </div>
              <div class="container-fluid mt-1 mb-1">
-               <div class="card-body">
+               <div class="card-body" id="starpanel">
                  <div class="mt-2 mb-1 text-center">
                    <button type="button" class="btn btn-primary" id="star">Comenzar -></button>
                  </div>
@@ -53,10 +66,7 @@
         });
     }, 2500);
 
-  });
-
-  // startColorstr
-  window.onload = function (){
+    // interaccion a la escucha
     document.getElementById('star').addEventListener('click',next_question,false);
     var ElsQuestion = document.querySelectorAll('.finalanswer');
     if (ElsQuestion) {
@@ -64,17 +74,19 @@
         ElsQuestion[i].addEventListener('click',next_question,false);
       }
     }
-  }
+  });
 
-  var cont = 0
-  var positivas = 0
-  var negativas = 0
+ // next_question funcion
+
+  var cont = -1;
   var CantQuestion = document.querySelectorAll('.finalanswer').length;
   function next_question(){
     var Sw = 0;
-    if (cont == 0) {
-      $('#star').css("display","none");
-      Sw = 1;
+    if (cont == -1) {
+      $('#starpanel').css("display","none");
+      $('#answerbody0').css('display', 'block');
+      $("#indexanswer").html(cont + 2);
+      cont += 1;
     }
     else {
       var SelectElem  = document.getElementById('select' + cont);
@@ -84,6 +96,13 @@
       // text valor del texto
       if (parseInt(SelectValue) > 0){
         Sw = 1;
+        // sumar las respuestas correctas e Incorrectas
+        $.ajax({
+          url: '<%= answer_query_path %>',
+          type: 'POST',
+          dataType: 'script',
+          data: {answer_id: SelectValue, panel: cont , answerscant: <%= @answerscant %>}
+        })
       }else {
         alert('Respuesta no Seleccionada')
       };
@@ -91,16 +110,14 @@
     if (Sw==1){
       $('#answerbody' + cont).css("display","none");
       cont += 1;
-      $("#indexanswer").html(cont);
       $('#answerbody' + cont).css('display', 'block');
-
-      // sumar las respuestas correctas e Incorrectas
-      
-
-
-
       if (cont == CantQuestion){
-        alert("LAST");
+        for (var i=0; i < CantQuestion + 1; i++){
+          $('#answerbody' + i).css('display', 'block');
+        }
+      }
+      else {
+        $("#indexanswer").html(cont + 1);
       }
     }
   }

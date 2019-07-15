@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   }
 
   post 'answer_update', to: 'answers#answer_update', as: 'answer_update'
+  post 'answer_query', to: 'pages#answer_query', as: 'answer_query'
 
   get 'pages/index'
 

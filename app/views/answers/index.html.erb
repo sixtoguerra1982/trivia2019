@@ -23,7 +23,13 @@
                  </div>
               <% else %>
                 <div class="input-group">
-                  <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio">
+                   <% if (@cantidad_answers > 1) %>
+                    <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio">
+                  <% else %>
+                    <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio">
+
+                    <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt2" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio d-none" checked="true">
+                  <% end %>
                   <label for="answer<%= answer.id %>opt1">Respuesta Equivocada</label>
                 </div>
               <% end %>
@@ -55,7 +61,7 @@
 <script type="text/javascript">
   function OnChangeState (id_question , id_answer) {
 
-        var form_clicks = document.querySelectorAll(".list-group-item-success")
+        var form_clicks = document.querySelectorAll(".list-group-item-success");
 
         // marcar los elementos success como warning
         for (var i = 0; i < form_clicks.length; i++) {

@@ -10,6 +10,7 @@ class AnswersController < ApplicationController
     @answers = Answer.where(question_id: params[:question_id])
     @answer = Answer.new
     @question = Question.find_by(id: params[:question_id])
+    @cantidad_answers =  @answers.count
   end
 
   def new
