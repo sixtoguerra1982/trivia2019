@@ -13,11 +13,10 @@ Rails.application.routes.draw do
   post 'answer_update', to: 'answers#answer_update', as: 'answer_update'
 
   post 'answersusers', to: 'answersusers#create'
-        
+
   get 'pages/index'
 
 
   root to: 'pages#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
- #post 'answer_query', to: 'pages#answer_query', as: 'answer_query'

@@ -1,4 +1,4 @@
 class Answersuser < ApplicationRecord
-  belongs_to :users
-  belongs_to :answers
+  belongs_to :user
+  belongs_to :answer
 end

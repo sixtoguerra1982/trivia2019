@@ -4,6 +4,11 @@ class AnswersusersController < ApplicationController
     @answerbol = @answer.tipo
     @panel = params[:panel].to_i
     @answerscant = params[:answerscant].to_i
-    byebug
+
+    @answersuser = Answersuser.new
+    @answersuser.user = current_user
+    @answersuser.answer = @answer
+    @answersuser.value = @answer.tipo
+    @answersuser.save
   end
 end

@@ -3,9 +3,4 @@ class PagesController < ApplicationController
     @questions = Question.all
     @answerscant = @questions.count
   end
-
-  def answer_query
-  
-    Answersusers.create
-  end
 end
