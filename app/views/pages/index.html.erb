@@ -104,7 +104,7 @@
           Sw = 1;
           // sumar las respuestas correctas e Incorrectas
           $.ajax({
-            url: '<%= answer_query_path %>',
+            url: '<%= answersusers_path %>',
             type: 'POST',
             dataType: 'script',
             data: {answer_id: SelectValue, panel: cont , answerscant: <%= @answerscant %>}

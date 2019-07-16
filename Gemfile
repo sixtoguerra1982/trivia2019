@@ -17,6 +17,10 @@ gem 'devise', '>= 4.6.0'
 # gem to_bool convierte boolean en string
 gem 'to_bool', '~> 1.2'
 
+
+# gem "cancan" control de acceso
+gem 'cancancan'
+
 gem 'sass-rails', '~> 5'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'

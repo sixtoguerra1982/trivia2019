@@ -1,6 +1,8 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:edit, :update, :destroy]
   before_action :set_questions, only: [:new, :index_answers]
+  before_action :authenticate_user!
+  before_action :check_rol
   def index_answers
     @answers = Answer.order(:question_id)
     @question = @questions.first
@@ -85,5 +87,11 @@ class AnswersController < ApplicationController
 
     def set_questions
       @questions = Question.all
+    end
+
+    def check_rol
+      if !current_user.admin?
+        redirect_to root_path, alert: 'Acceso no Autorizado!'
+      end
     end
 end

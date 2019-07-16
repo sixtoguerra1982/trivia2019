@@ -5,9 +5,7 @@ class PagesController < ApplicationController
   end
 
   def answer_query
-    @answer = Answer.find(params[:answer_id].to_i)
-    @answerbol = @answer.tipo
-    @panel = params[:panel].to_i
-    @answerscant = params[:answerscant].to_i
+  
+    Answersusers.create
   end
 end
