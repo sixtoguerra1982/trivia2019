@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create!(email: "admin@trivia.cl", name: "Administrador", password: "admin123", rol: 0)
+User.create!(email: "admin@trivia.cl", name: "Administrador", password: "admin123", role: 0)
 User.create!(email: "sixto@gmail.com", name: "Sixto Guerra", password: "123123")
 10.times do |i|
   Question.create!(description: "#{i+1} + #{i+1}")

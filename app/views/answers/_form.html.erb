@@ -9,7 +9,7 @@
       <%= form.select :question_id, @questions.pluck(:description, :id) %>
     <% else %>
       <%= form.hidden_field :question_id, value: @answer.question_id %>
-      <p><%= @answer.question_id %></p>
+      <p><%= @answer.question.description %></p>
     <% end %>
   </div>
   <div class="actions">

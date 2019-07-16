@@ -1,60 +1,70 @@
 <div class="container">
   <div class="mt-10">
-    <%= link_to 'New Question?', new_question_path %>
-    <%= render 'questions/form' %>
-
+    <div class="adminbodyresources">
+      <%= link_to 'New Question?', new_question_path %>
+      <%= render 'questions/form' %>
+    </div>
+    
     <% if @answers.count > 0 %>
-      <label for="Answers List">Respuestas</label>
+
       <h1><%= @question.description %> ?</h1>
-
-      <form name="FormOpt">
-        <% @answers.each do |answer| %>
-          <ul class="list-group">
-            <li class="list-group-item <%= answer.tipo.to_s=="true" ? 'list-group-item-success' : 'list-group-item-warning'%>" id ="form<%= answer.id %>">
-              <%= answer.answer %>
-              <ol class="list-group">
-                <li class="list-group-item"><%= link_to "X", question_answer_path(answer.question_id ,answer) , method: :delete %></li>
-                <li class="list-group-item"><%= link_to "E", edit_question_answer_path(answer.question_id ,answer) %></li>
-              </ol>
-              <% if answer.tipo.to_s == "true" %>
-                 <div class="input-group">
-                   <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" checked="<%= answer.tipo.to_s %>" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %> )" class="form-radio">
-                   <label for="answer<%= answer.id %>opt1">Respuesta Correcta</label>
-                 </div>
-              <% else %>
-                <div class="input-group">
-                   <% if (@cantidad_answers > 1) %>
-                    <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio">
-                  <% else %>
-                    <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio">
-
-                    <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt2" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio d-none" checked="true">
-                  <% end %>
-                  <label for="answer<%= answer.id %>opt1">Respuesta Equivocada</label>
+      <label for="Answers List">Respuestas</label>
+        <form name="FormOpt">
+          <% @answers.each do |answer| %>
+            <ul class="list-group mt-1">
+              <li class="list-group-item <%= answer.tipo.to_s=="true" ? 'list-group-item-success' : 'list-group-item-warning'%>" id ="form<%= answer.id %>">
+                <div class="btn-group" role="group">
+                    <%= link_to "Eliminar", question_answer_path(answer.question_id ,answer) , method: :delete , class: 'btn btn-danger'%>
+                    <%= link_to "Editar", edit_question_answer_path(answer.question_id ,answer), class: 'btn btn-success' %>
                 </div>
-              <% end %>
-            </li>
-          </ul>
-        <% end %>
-      </form>
+                <div class="adminbodyresources">
+                  <%= answer.answer %>
+                </div>
+
+                <div class="optionanswer">
+                  <div>
+                    <% if answer.tipo.to_s == "true" %>
+                       <div class="input-group">
+                         <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" checked="<%= answer.tipo.to_s %>" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %> )" class="form-radio">
+                         <label for="answer<%= answer.id %>opt1">Respuesta Correcta</label>
+                       </div>
+                    <% else %>
+                      <div class="input-group">
+                         <% if (@cantidad_answers > 1) %>
+                          <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio">
+                        <% else %>
+                          <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt1" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio">
+
+                          <input type="radio" name="AnswerOpt" id="answer<%= answer.id %>opt2" onclick="OnChangeState (<%= answer.question_id %>,<%= answer.id %>)" class="form-radio d-none" checked="true">
+                        <% end %>
+                        <label for="answer<%= answer.id %>opt1">Respuesta Equivocada</label>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          <% end %>
+        </form>
     <% end %>
 
-    <%= form_with(model: [@question, @answer], local: true) do |form| %>
+    <div class="adminbodyresources">
+      <%= form_with(model: [@question, @answer], local: true) do |form| %>
 
-      <%= form.hidden_field :question_id, value: @question.id %>
+        <%= form.hidden_field :question_id, value: @question.id %>
 
-      <div class="field">
-        <%= form.label :answer, "Respuesta" %>
-        <%= form.text_field :answer %>
-      </div>
+        <div class="field">
+          <%= form.label :answer, "Respuesta" %>
+          <%= form.text_field :answer, class: 'textanswernew' %>
+        </div>
 
-      <div class="actions">
-        <%= form.submit %>
-      </div>
-    <% end %>
+        <div class="actions">
+          <%= form.submit "Guardar", class: 'mt-1 btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
 
-
-    <%= link_to "Back", questions_path  %>
+    <%= link_to "Back", :back  %>
  </div>
 </div>
 

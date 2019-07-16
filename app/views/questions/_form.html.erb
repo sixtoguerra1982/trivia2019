@@ -13,10 +13,10 @@
 
   <div class="field">
     <%= form.label :description, "Pregunta ?" %>
-    <%= form.text_area :description %>
+    <%= form.text_area :description, autofocus: true, class: 'estilotextarea' %>
   </div>
 
   <div class="actions">
-    <%= form.submit 'Guardar' %>
+    <%= form.submit 'Guardar', class:'btn btn-primary mb-3' %>
   </div>
 <% end %>

@@ -4,8 +4,6 @@ Rails.application.routes.draw do
     resources :answers, except: [:show]
   end
 
-  get 'index_answers', to: 'answers#index_answers', as: 'answers_index'
-
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
@@ -13,7 +11,7 @@ Rails.application.routes.draw do
   post 'answer_update', to: 'answers#answer_update', as: 'answer_update'
 
   post 'answersusers', to: 'answersusers#create'
-
+  post 'ranking', to: 'pages#ranking'
   get 'pages/index'
 
 

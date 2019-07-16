@@ -1,13 +1,12 @@
 <nav class="navbar fixed-top navbar-dark bg-warning">
   <ul class="nav nav-tabs">
-    <li class="nav-item"><%= link_to 'Home', root_path, class:'nav-link active' %></li>
+    <li class="nav-item"><%= link_to 'Home', root_path, class:'nav-link' %></li>
     <% if user_signed_in? %>
-      <li class="nav-item"><%= link_to current_user.email, root_path,class: 'nav-link'  %></li>
+      <li class="nav-item"><%= link_to current_user.role, root_path,class: 'nav-link'  %></li>
       <li class="nav-item"><%= link_to 'Cerrar Sesión', destroy_user_session_path , method: :delete ,class: 'nav-link' %></li>
       <li class="nav-item"><%= link_to 'Perfil (Edit)', edit_user_registration_path(current_user), class: 'nav-link' %></li>
       <% if current_user.admin? %>
-        <li class="nav-item"><%= link_to "Index Questions", questions_path  ,class: 'nav-link' %></li>
-        <li class="nav-item"><%= link_to 'Index Answers', answers_index_path ,class: 'nav-link' %></li>
+        <li class="nav-item"><%= link_to "Questions", questions_path  ,class: 'nav-link' %></li>
       <% end %>
     <% else %>
       <li class="nav-item"><%= link_to 'Ingreso (Log In)', new_user_session_path ,class: 'nav-link' %></li>

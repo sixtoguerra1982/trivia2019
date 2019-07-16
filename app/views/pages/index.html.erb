@@ -1,29 +1,41 @@
 <div class="container">
   <div class="mt-10">
     <h1>Trivia</h1>
+
       <% if @answerscant > 0 %>
         <div class="panelplay">
           <div class="card">
             <div class="card-header">
-               <label for="Questions List Play">Respuestas</label>
-               <div class="score">
-                 <label id="indexanswer">0</label>
-                 <label>/</label>
-                 <label><%= @answerscant %></label>
-               </div>
-
-               <div class="puntajefinal">
-                 <label>Correctas</label>
-                 <div class="Aciertos">
-                   <label id="puntajeporcentaje">0</label>
-                   <label>%</label>
-                 </div>
-                 <label>Erróneo</label>
-                 <div class="Aciertos">
-                   <label id="puntajeporcentajeerror">0</label>
-                   <label>%</label>
-                 </div>
-               </div>
+              <div class="row">
+                <div class="col-md-3">
+                    <label for="Questions List Play">Respuestas</label>
+                    <div class="score">
+                      <label id="indexanswer">0</label>
+                      <label>/</label>
+                      <label><%= @answerscant %></label>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="puntajefinal">
+                      <label>Correctas</label>
+                      <div class="Aciertos">
+                        <label id="puntajeporcentaje">0</label>
+                        <label>%</label>
+                      </div>
+                      <label>Erróneo</label>
+                      <div class="Aciertos">
+                        <label id="puntajeporcentajeerror">0</label>
+                        <label>%</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="ranking">
+                      <ol id="ranking">
+                      </ol>
+                    </div>
+                  </div>
+              </div>
              </div>
              <div class="container-fluid mt-1 mb-1">
                <div class="card-body" id="starpanel">
@@ -36,6 +48,8 @@
                    <% end %>
                  </div>
                </div>
+
+
               <% @questions.each_with_index do |question,i| %>
                 <div class="answerbody" id="answerbody<%=i%>">
                   <h5 class="card-title"><%= question.description %></h5>
@@ -53,6 +67,8 @@
                   </div>
                 </div>
               <% end %>
+
+
             </div>
           </div>
         </div>
@@ -123,6 +139,12 @@
           for (var i=0; i < CantQuestion + 1; i++){
             $('#answerbody' + i).css('display', 'block');
           }
+          alert("fin");
+          $.ajax({
+            url: '<%= ranking_path %>',
+            type: 'POST',
+            dataType: 'script'
+          })
         }
         else {
           $("#indexanswer").html(cont + 1);

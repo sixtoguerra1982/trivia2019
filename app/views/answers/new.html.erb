@@ -1,6 +1,15 @@
-<%= render 'shared/navbaranswers' %>
-<h1>New Answer</h1>
+<div class="container">
+  <div class="mt-10">
+    <div class="panelplay">
+      <div class="adminbodyresources">
 
-<%= render 'form', answer: @answer %>
+        <%= render 'shared/navbaranswers' %>
+        <h1>New Answer</h1>
 
-<%= link_to 'Back', answers_index_path %>
+        <%= render 'form', answer: @answer %>
+
+        <%= link_to 'Back', :back %>
+      </div>
+    </div>
+  </div>
+</div>
