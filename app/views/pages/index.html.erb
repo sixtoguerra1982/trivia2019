@@ -28,7 +28,12 @@
              <div class="container-fluid mt-1 mb-1">
                <div class="card-body" id="starpanel">
                  <div class="mt-2 mb-1 text-center">
-                   <button type="button" class="btn btn-primary" id="star">Comenzar -></button>
+                   <% if user_signed_in? %>
+                    <button type="button" class="btn btn-primary" id="star">Comenzar -></button>
+                   <% else %>
+                    <%= link_to 'Ingreso (Log In)', new_user_session_path ,class: 'btn btn-primary' %></li>
+                    <%= link_to 'Registro (Sign Out)', new_user_registration_path, class: 'btn btn-primary' %></li>
+                   <% end %>
                  </div>
                </div>
               <% @questions.each_with_index do |question,i| %>
@@ -81,43 +86,45 @@
   var cont = -1;
   var CantQuestion = document.querySelectorAll('.finalanswer').length;
   function next_question(){
-    var Sw = 0;
-    if (cont == -1) {
-      $('#starpanel').css("display","none");
-      $('#answerbody0').css('display', 'block');
-      $("#indexanswer").html(cont + 2);
-      cont += 1;
-    }
-    else {
-      var SelectElem  = document.getElementById('select' + cont);
-      var indice = SelectElem.selectedIndex;
-      var SelectValue = SelectElem.options[indice].value;
-      // value valor del elemento seleccionado
-      // text valor del texto
-      if (parseInt(SelectValue) > 0){
-        Sw = 1;
-        // sumar las respuestas correctas e Incorrectas
-        $.ajax({
-          url: '<%= answer_query_path %>',
-          type: 'POST',
-          dataType: 'script',
-          data: {answer_id: SelectValue, panel: cont , answerscant: <%= @answerscant %>}
-        })
-      }else {
-        alert('Respuesta no Seleccionada')
-      };
-    }
-    if (Sw==1){
-      $('#answerbody' + cont).css("display","none");
-      cont += 1;
-      $('#answerbody' + cont).css('display', 'block');
-      if (cont == CantQuestion){
-        for (var i=0; i < CantQuestion + 1; i++){
-          $('#answerbody' + i).css('display', 'block');
-        }
+    if ('<%= user_signed_in? %>'){
+      var Sw = 0;
+      if (cont == -1) {
+        $('#starpanel').css("display","none");
+        $('#answerbody0').css('display', 'block');
+        $("#indexanswer").html(cont + 2);
+        cont += 1;
       }
       else {
-        $("#indexanswer").html(cont + 1);
+        var SelectElem  = document.getElementById('select' + cont);
+        var indice = SelectElem.selectedIndex;
+        var SelectValue = SelectElem.options[indice].value;
+        // value valor del elemento seleccionado
+        // text valor del texto
+        if (parseInt(SelectValue) > 0){
+          Sw = 1;
+          // sumar las respuestas correctas e Incorrectas
+          $.ajax({
+            url: '<%= answer_query_path %>',
+            type: 'POST',
+            dataType: 'script',
+            data: {answer_id: SelectValue, panel: cont , answerscant: <%= @answerscant %>}
+          })
+        }else {
+          alert('Respuesta no Seleccionada')
+        };
+      }
+      if (Sw==1){
+        $('#answerbody' + cont).css("display","none");
+        cont += 1;
+        $('#answerbody' + cont).css('display', 'block');
+        if (cont == CantQuestion){
+          for (var i=0; i < CantQuestion + 1; i++){
+            $('#answerbody' + i).css('display', 'block');
+          }
+        }
+        else {
+          $("#indexanswer").html(cont + 1);
+        }
       }
     }
   }
