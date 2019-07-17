@@ -2,7 +2,7 @@
   <div class="mt-10">
     <h1>Trivia</h1>
 
-      <% if @answerscant > 0 %>
+      <% if @answerscant > 0 || !user_signed_in? %>
         <div class="panelplay">
           <div class="card">
             <div class="card-header">
@@ -50,13 +50,13 @@
                </div>
 
 
-              <% @questions.each_with_index do |question,i| %>
+              <% @filtrados.each_with_index do |question,i| %>
                 <div class="answerbody" id="answerbody<%=i%>">
-                  <h5 class="card-title"><%= question.description %></h5>
+                  <h5 class="card-title"><%= questionsearch(question).description %></h5>
                   <div class="car-body">
                     <select class="select-css" id="select<%=i%>" >
                       <option value="0">---</option>
-                      <% answersOfQuestion(question).each do |answer|%>
+                      <% answersOfQuestion(questionsearch(question).id).each do |answer|%>
                         <li><%= answer.answer %></li>
                         <option value="<%= answer.id %>"><%= answer.answer %></option>
                       <% end %>
@@ -139,7 +139,6 @@
           for (var i=0; i < CantQuestion + 1; i++){
             $('#answerbody' + i).css('display', 'block');
           }
-          alert("fin");
           $.ajax({
             url: '<%= ranking_path %>',
             type: 'POST',

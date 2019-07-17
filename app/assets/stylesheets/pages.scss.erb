@@ -58,15 +58,22 @@ body{
   border-radius: 10px;
 }
 
-.puntajefinal{
-
-}
-
-
 .correcta{
   background-color: green;
 }
 
 .incorrecta{
   background-color: red;
+}
+
+.outrotativo{
+	-webkit-animation: 1s outrotativo 1;
+}
+
+@-webkit-keyframes outrotativo{
+	0%{
+		opacity: 0;
+		-webkit-transform: translateX(100%)
+							rotate(-260deg);
+	}
 }
